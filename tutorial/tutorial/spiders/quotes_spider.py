@@ -1,19 +1,25 @@
 import scrapy
+from scrapy.spiders import CrawlSpider
+import re
+from tld import get_tld
+from bs4 import BeautifulSoup as BS
+import hashlib
 
-
-class QuotesSpider(scrapy.Spider):
-    name = "quotes"
+class EmailSpider(CrawlSpider):
+    name = "kennesaw"
+    emailRegex = re.compile(r"[-.a-z]+@[^@\s\.]+\.[.a-z]{2,3}")
     start_urls = [
-        'https://quotes.toscrape.com/page/1/'
-    ]
-
+        'https://www.kennesaw.edu',
+        # 'https://csse.kennesaw.edu',
+        # 'https://research.kennesaw.edu'
+        ]
     def parse(self, response):
-        for quote in response.css('div.quote'):
-            yield {
-                'text': quote.css('span.text::text').get(),
-                'author': quote.css('small.author::text').get(),
-                'tags': quote.css('div.tags a.tag::text').getall(),
-            }
-        next_page = response.css('li.next a::attr(href)').get()
-        if next_page is not None:
-            yield from response.follow_all(css='ul.pager a', callback=self.parse)
+        entry = {
+            'pageid': hashlib.md5(response.url.encode()).hexdigest(),
+            'url': response.url,
+            'title': response.xpath('//title/text()').getall()[0],
+            'body': ' '.join(BS(response.text).get_text(separator=' ').split())
+        }
+        entry['emails'] = re.findall(self.emailRegex, entry['body'])
+
+        yield entry 

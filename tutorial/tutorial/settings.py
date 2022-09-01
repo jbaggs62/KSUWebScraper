@@ -7,20 +7,26 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'tutorial'
-
+BOT_NAME = 'jbaggs2-web-scraper'
 SPIDER_MODULES = ['tutorial.spiders']
 NEWSPIDER_MODULE = 'tutorial.spiders'
-
-
+DOWNLOAD_DELAY = 1.0
+CLOSESPIDER_PAGE_COUNT: 1000
+DEPTH_PRIORITY:1
+greedy = True
+forbidden_keys = ['tel:', 'mailto:', '.jpg', '.pdf', '.png']
+allow_domains=['kennesaw.edu'],
+unqiue = True
+follow = True,
+callback = 'parse'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'tutorial (+http://www.yourdomain.com)'
+USER_AGENT = 'jbaggs2'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
