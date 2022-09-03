@@ -13,12 +13,7 @@ NEWSPIDER_MODULE = 'tutorial.spiders'
 DOWNLOAD_DELAY = 1.0
 CLOSESPIDER_PAGE_COUNT: 1000
 DEPTH_PRIORITY:1
-greedy = True
-forbidden_keys = ['tel:', 'mailto:', '.jpg', '.pdf', '.png']
-allow_domains=['kennesaw.edu'],
-unqiue = True
-follow = True,
-callback = 'parse'
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'jbaggs2'
 

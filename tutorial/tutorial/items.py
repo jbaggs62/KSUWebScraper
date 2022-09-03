@@ -3,11 +3,12 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 
-# from scrapy.item import Item, Field
+from scrapy.item import Item, Field
 
 
-# class TutorialItem(Item):
-#     title = Field()
-#     link = Field()
-#     desc = Field()
-#     pass
+class WebsiteItem(Item):
+    pageID = Field()
+    url = Field()
+    title = Field()
+    body = Field()
+    pass
