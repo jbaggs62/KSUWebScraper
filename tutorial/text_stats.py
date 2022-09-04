@@ -7,6 +7,8 @@ import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import stopwords
 import string
+import matplotlib.pyplot as plt
+
 
 
 
@@ -112,3 +114,29 @@ df_after = pd.DataFrame (noStopWordsFreq, columns = ['Words', 'Freq'])
 print("dataframe after stopwords and punc removed")
 df_after['Perc'] = df_after.apply(lambda row: row.Freq/(len(noStopWords)) , axis = 1)
 print(df_after)
+
+
+# graphs
+print("This is number of unique words in all words:", len(set(all_words)))
+all30cnt = most_freq_lst(all_words,len(set(all_words)))
+
+listx=[]
+listy=[]
+z=0
+for i in all30cnt:
+    z += 1
+    listx.append(z)
+    listy.append(i[1])
+    #if z<10:
+        #print("this is z ",z," this is i ",i," this is y ",i[1])
+plt.plot(listx,listy)
+plt.xlabel('Rank')
+plt.ylabel('Frequency')
+plt.title('Word Distribution')
+plt.show()
+
+plt.loglog(listx,listy)
+plt.xlabel('log(Rank)')
+plt.ylabel('log(Frequency)')
+plt.title('Word Distribution Log-Log Plot')
+plt.show()
